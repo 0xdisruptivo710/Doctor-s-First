@@ -88,7 +88,7 @@ export const SlideNextSteps = () => {
           <ArrowRight className="w-6 h-6" />
         </a>
         <p className="text-muted-foreground/60 text-sm mt-4">
-          Ou entre em contato: (XX) XXXXX-XXXX
+          Ou entre em contato: (15) 99742-4782
         </p>
       </div>
     </div>
