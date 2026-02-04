@@ -4,9 +4,9 @@ export const SlideDifferentials = () => {
   const differentials = [
     {
       icon: Shield,
-      title: "Especializado em Advocacia",
+      title: "Gestão de Tráfego Especializada",
       description:
-        "Não é um CRM genérico. Feito especificamente para a jornada jurídica.",
+        "Campanhas focadas em conversão, otimização contínua e estratégias personalizadas para seu nicho.",
     },
     {
       icon: Zap,

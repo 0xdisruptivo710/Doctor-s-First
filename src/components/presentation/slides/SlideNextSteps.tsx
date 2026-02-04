@@ -78,10 +78,15 @@ export const SlideNextSteps = () => {
 
       {/* CTA */}
       <div className="text-center mt-8">
-        <button className="inline-flex items-center gap-3 px-12 py-6 rounded-xl gradient-emerald text-primary-foreground text-xl font-bold transition-all duration-200 hover:scale-105 glow-emerald animate-pulse-glow">
+        <a
+          href="https://calendar.app.google/ZatYZLKFPZWQZDCT8"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-3 px-12 py-6 rounded-xl gradient-emerald text-primary-foreground text-xl font-bold transition-all duration-200 hover:scale-105 glow-emerald animate-pulse-glow"
+        >
           Agendar Reunião de Alinhamento
           <ArrowRight className="w-6 h-6" />
-        </button>
+        </a>
         <p className="text-muted-foreground/60 text-sm mt-4">
           Ou entre em contato: (XX) XXXXX-XXXX
         </p>
