@@ -10,11 +10,11 @@ export const SlideCTA = () => {
     : "1.536.000";
 
   const handleWhatsApp = () => {
-    window.open("https://wa.me/5511999999999?text=Oi! Vi a apresentação da ALMIG EPIs e quero conversar sobre as propostas.", "_blank");
+    window.open("https://wa.me/5515997424782?text=Ol%C3%A1%20Murilo%2C%20gostaria%20de%20dar%20andamento%20no%20meu%20onbording.", "_blank");
   };
 
   const handleSchedule = () => {
-    window.open("https://wa.me/5511999999999?text=Oi! Gostaria de agendar uma reunião para discutir as propostas da ALMIG EPIs.", "_blank");
+    window.open("https://wa.me/5515997424782?text=Ol%C3%A1%20Murilo%2C%20gostaria%20de%20dar%20andamento%20no%20meu%20onbording.", "_blank");
   };
 
   return (
