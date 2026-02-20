@@ -14,7 +14,7 @@ const features = [
   "Organização diária pelo Agente IA",
   "Dashboard com relatórios internos",
   "Onboarding + treinamento da equipe",
-  "Suporte dedicado nos primeiros 30 dias",
+  "Suporte dedicado",
 ];
 
 export function SlideInvestimento({ isActive }: Props) {
@@ -96,7 +96,7 @@ export function SlideInvestimento({ isActive }: Props) {
             show ? "opacity-100 translate-y-0 delay-500" : "opacity-0 translate-y-4"
           }`}
         >
-          Inclui onboarding, treinamento da equipe e suporte dedicado nos primeiros 30 dias.
+          Inclui onboarding, treinamento da equipe e suporte dedicado.
         </p>
       </div>
     </div>
