@@ -47,15 +47,16 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        emerald: {
-          glow: "hsl(var(--emerald-glow))",
-        },
-        blue: {
-          glow: "hsl(var(--blue-glow))",
-        },
-        slate: {
-          deep: "hsl(var(--slate-deep))",
-          card: "hsl(var(--slate-card))",
+        // Custom AIOS colors
+        aios: {
+          bg: "#0A0F1E",
+          emerald: "#00D4AA",
+          blue: "#3B82F6",
+          red: "#EF4444",
+          amber: "#F59E0B",
+          text: "#F1F5F9",
+          "text-muted": "#94A3B8",
+          surface: "rgba(255,255,255,0.04)",
         },
       },
       borderRadius: {
@@ -64,7 +65,16 @@ export default {
         sm: "calc(var(--radius) - 4px)",
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        sans: ["Inter", "system-ui", "sans-serif"],
+        display: ["Space Grotesk", "Inter", "sans-serif"],
+      },
+      fontSize: {
+        "hero": ["4.5rem", { lineHeight: "1.1", fontWeight: "700" }],
+        "hero-sm": ["3rem", { lineHeight: "1.15", fontWeight: "700" }],
+        "title": ["2.5rem", { lineHeight: "1.2", fontWeight: "700" }],
+        "title-sm": ["2rem", { lineHeight: "1.25", fontWeight: "700" }],
+        "subtitle": ["1.35rem", { lineHeight: "1.5", fontWeight: "500" }],
+        "body": ["1rem", { lineHeight: "1.7", fontWeight: "400" }],
       },
       keyframes: {
         "accordion-down": {
@@ -75,25 +85,10 @@ export default {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
-        "fade-in": {
-          from: { opacity: "0", transform: "translateY(10px)" },
-          to: { opacity: "1", transform: "translateY(0)" },
-        },
-        "slide-in-right": {
-          from: { opacity: "0", transform: "translateX(20px)" },
-          to: { opacity: "1", transform: "translateX(0)" },
-        },
-        "pulse-glow": {
-          "0%, 100%": { boxShadow: "0 0 20px hsl(160 84% 39% / 0.3)" },
-          "50%": { boxShadow: "0 0 40px hsl(160 84% 39% / 0.5)" },
-        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "fade-in": "fade-in 0.5s ease-out forwards",
-        "slide-in-right": "slide-in-right 0.5s ease-out forwards",
-        "pulse-glow": "pulse-glow 2s ease-in-out infinite",
       },
     },
   },

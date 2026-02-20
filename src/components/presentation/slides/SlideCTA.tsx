@@ -1,92 +1,109 @@
-import { MessageCircle, Calendar, Sparkles } from "lucide-react";
-import { MagneticButton } from "@/components/ui/magnetic-button";
-import { useCalculator } from "@/contexts/CalculatorContext";
+import { useEffect, useState } from "react";
+import { MessageCircle, Calendar, Clock } from "lucide-react";
 
-export const SlideCTA = () => {
-  const { annualLoss } = useCalculator();
+interface Props {
+  isActive: boolean;
+}
 
-  const formattedLoss = annualLoss > 0
-    ? annualLoss.toLocaleString("pt-BR")
-    : "1.536.000";
+export function SlideCTA({ isActive }: Props) {
+  const [show, setShow] = useState(false);
 
-  const handleWhatsApp = () => {
-    window.open("https://wa.me/5515997424782?text=Ol%C3%A1%20Murilo%2C%20gostaria%20de%20dar%20andamento%20no%20meu%20onbording.", "_blank");
-  };
-
-  const handleSchedule = () => {
-    window.open("https://wa.me/5515997424782?text=Ol%C3%A1%20Murilo%2C%20gostaria%20de%20dar%20andamento%20no%20meu%20onbording.", "_blank");
-  };
+  useEffect(() => {
+    if (isActive) {
+      const t = setTimeout(() => setShow(true), 100);
+      return () => clearTimeout(t);
+    }
+    setShow(false);
+  }, [isActive]);
 
   return (
-    <div className="flex flex-col items-center justify-center gap-8 h-full animate-fade-in">
-      {/* Badge */}
-      <div className="inline-flex items-center px-6 py-2 rounded-full bg-gradient-to-r from-primary/30 to-primary/20 border border-primary/40 shadow-lg">
-        <Sparkles className="w-4 h-4 mr-2 text-primary" />
-        <span className="text-sm font-semibold text-primary">
-          Hora de Decidir
-        </span>
-      </div>
+    <div className="relative w-full h-full flex items-center justify-center px-6 md:px-16 lg:px-24 overflow-hidden">
+      {/* Gradient orbs */}
+      <div className="absolute top-1/3 left-1/4 w-[400px] h-[400px] rounded-full bg-[#00D4AA]/5 blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-1/3 right-1/4 w-[300px] h-[300px] rounded-full bg-[#3B82F6]/5 blur-[100px] pointer-events-none" />
 
-      {/* Title with calculator value */}
-      <h2 className="text-4xl md:text-6xl font-bold text-center tracking-tight">
-        <span className="bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
-          Cada dia sem agir sao
-        </span>
-        <br />
-        <span className="bg-gradient-to-r from-red-400 to-red-600 bg-clip-text text-transparent">
-          R$ {formattedLoss}
-        </span>
-        <br />
-        <span className="bg-gradient-to-r from-foreground/70 to-foreground/50 bg-clip-text text-transparent text-2xl md:text-3xl">
-          perdidos por ano
-        </span>
-      </h2>
-
-      {/* Subtitle */}
-      <p className="text-lg text-muted-foreground text-center max-w-2xl">
-        A transformacao da ALMIG EPIs comeca com uma conversa.
-        Vamos entender seu cenario e personalizar a melhor proposta.
-      </p>
-
-      {/* CTA Buttons */}
-      <div className="flex flex-col sm:flex-row items-center gap-4 mt-4">
-        {/* Primary CTA */}
-        <MagneticButton
-          className="text-lg px-10 py-6 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-2xl glow-emerald"
-          onClick={handleWhatsApp}
-          strength={0.4}
+      <div className="relative z-10 max-w-4xl mx-auto text-center">
+        {/* Badge */}
+        <div
+          className={`inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#F59E0B]/10 border border-[#F59E0B]/30 mb-8 transition-all duration-700 ${
+            show ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+          }`}
         >
-          <MessageCircle className="w-5 h-5 mr-2" />
-          Falar no WhatsApp Agora
-        </MagneticButton>
+          <Clock className="w-4 h-4 text-[#F59E0B]" />
+          <span className="text-sm text-[#F59E0B]">Hora de Agir</span>
+        </div>
 
-        {/* Secondary CTA */}
-        <MagneticButton
-          className="text-lg px-10 py-6 bg-transparent border-2 border-primary/40 hover:border-primary/60 text-primary font-semibold"
-          onClick={handleSchedule}
-          strength={0.3}
+        {/* Title */}
+        <h2
+          className={`font-display text-4xl md:text-5xl lg:text-[3.5rem] leading-[1.15] mb-6 transition-all duration-700 ${
+            show ? "opacity-100 translate-y-0 delay-100" : "opacity-0 translate-y-6"
+          }`}
         >
-          <Calendar className="w-5 h-5 mr-2" />
-          Agendar Reuniao
-        </MagneticButton>
-      </div>
+          <span className="text-gradient-primary">Cada mês sem sistema é</span>
+          <br />
+          <span className="text-[#F1F5F9]">um mês de leads perdidos</span>
+          <br />
+          <span className="text-[#F1F5F9]">sem que você saiba</span>
+        </h2>
 
-      {/* Trust note */}
-      <p className="text-sm text-muted-foreground text-center max-w-md">
-        Resposta em ate{" "}
-        <span className="text-primary font-semibold">2 horas uteis</span>.
-        <br />
-        Sem compromisso. Vamos descobrir juntos qual proposta e perfeita para voce.
-      </p>
+        <p
+          className={`text-lg text-[#94A3B8] max-w-2xl mx-auto mb-12 transition-all duration-700 ${
+            show ? "opacity-100 translate-y-0 delay-200" : "opacity-0 translate-y-4"
+          }`}
+        >
+          A Doctor's First construiu uma operação de produto impecável. Está na hora da operação de atendimento acompanhar esse nível.
+        </p>
 
-      {/* Bottom Badge */}
-      <div className="flex items-center gap-2 text-xs text-muted-foreground mt-4">
-        <Sparkles className="w-4 h-4 text-primary" />
-        <span>
-          Proposta preparada com carinho pela{" "}
-          <span className="text-primary font-semibold">AIOS</span>
-        </span>
+        {/* CTA Buttons */}
+        <div
+          className={`relative flex flex-col sm:flex-row items-center justify-center gap-4 mb-8 transition-all duration-700 ${
+            show ? "opacity-100 translate-y-0 delay-400" : "opacity-0 translate-y-4"
+          }`}
+        >
+          {/* Ping rings behind primary button */}
+          <div className="absolute left-1/2 sm:left-[calc(25%+8px)] top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
+            <div className="w-16 h-16 rounded-full border border-[#00D4AA]/20 animate-ping-ring" />
+            <div className="absolute inset-0 w-16 h-16 rounded-full border border-[#00D4AA]/10 animate-ping-ring" style={{ animationDelay: "0.5s" }} />
+          </div>
+
+          <a
+            href="https://wa.me/5548991472830"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="relative inline-flex items-center gap-2 px-8 py-4 bg-[#00D4AA] text-[#0A0F1E] font-bold rounded-xl hover:bg-[#00D4AA]/90 transition-all duration-300 glow-emerald text-lg z-10"
+          >
+            <MessageCircle className="w-5 h-5" />
+            <span>Falar no WhatsApp Agora</span>
+          </a>
+
+          <a
+            href="https://wa.me/5548991472830"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="relative inline-flex items-center gap-2 px-8 py-4 border-2 border-[#00D4AA]/40 text-[#00D4AA] font-semibold rounded-xl hover:bg-[#00D4AA]/10 transition-all duration-300 text-lg z-10"
+          >
+            <Calendar className="w-5 h-5" />
+            <span>Agendar Reunião</span>
+          </a>
+        </div>
+
+        <p
+          className={`text-sm text-[#94A3B8] mb-16 transition-all duration-700 ${
+            show ? "opacity-100 translate-y-0 delay-500" : "opacity-0 translate-y-4"
+          }`}
+        >
+          Resposta em até 2 horas. Sem compromisso.
+        </p>
+
+        {/* Footer */}
+        <p
+          className={`text-xs text-white/30 transition-all duration-700 ${
+            show ? "opacity-100 delay-600" : "opacity-0"
+          }`}
+        >
+          Proposta preparada com cuidado pela equipe AIOS CRM
+        </p>
       </div>
     </div>
   );
-};
+}

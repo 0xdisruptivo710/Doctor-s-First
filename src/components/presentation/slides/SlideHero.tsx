@@ -1,143 +1,111 @@
-import { useEffect, useRef } from "react";
-import { AlertTriangle, Users, MessageCircle, TrendingDown, ArrowRight } from "lucide-react";
-import { CounterAnimation } from "@/components/ui/counter-animation";
-import gsap from "gsap";
+import { useEffect, useState } from "react";
 
-export const SlideHero = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
+interface Props {
+  isActive: boolean;
+}
+
+function Particle({ delay, x, y, size }: { delay: number; x: number; y: number; size: number }) {
+  return (
+    <div
+      className="absolute rounded-full bg-[#00D4AA] animate-float-slow"
+      style={{
+        width: size,
+        height: size,
+        left: `${x}%`,
+        top: `${y}%`,
+        opacity: 0.12 + Math.random() * 0.18,
+        animationDelay: `${delay}s`,
+        animationDuration: `${4 + Math.random() * 4}s`,
+      }}
+    />
+  );
+}
+
+const particles = Array.from({ length: 20 }, (_, i) => ({
+  id: i,
+  delay: Math.random() * 3,
+  x: Math.random() * 100,
+  y: Math.random() * 100,
+  size: 2 + Math.random() * 4,
+}));
+
+export function SlideHero({ isActive }: Props) {
+  const [show, setShow] = useState(false);
 
   useEffect(() => {
-    if (!containerRef.current) return;
-
-    const cards = containerRef.current.querySelectorAll(".stat-card");
-    const badge = containerRef.current.querySelector(".hero-badge");
-    const title = containerRef.current.querySelector(".hero-title");
-    const subtitle = containerRef.current.querySelector(".hero-subtitle");
-
-    const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
-
-    tl.fromTo(badge, { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.5 })
-      .fromTo(title, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.7 }, "-=0.2")
-      .fromTo(subtitle, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5 }, "-=0.3")
-      .fromTo(
-        cards,
-        { opacity: 0, scale: 0.8, y: 20 },
-        { opacity: 1, scale: 1, y: 0, duration: 0.5, stagger: 0.1 },
-        "-=0.2"
-      );
-  }, []);
-
-  const stats = [
-    {
-      icon: Users,
-      value: 8,
-      label: "Vendedores",
-      sublabel: "no mesmo WhatsApp",
-      color: "text-red-400",
-      bg: "bg-red-500/10 border-red-500/30",
-    },
-    {
-      icon: MessageCircle,
-      value: 400,
-      suffix: "+",
-      label: "Leads/mes",
-      sublabel: "sem controle",
-      color: "text-orange-400",
-      bg: "bg-orange-500/10 border-orange-500/30",
-    },
-    {
-      icon: TrendingDown,
-      value: 40,
-      suffix: "%",
-      label: "Taxa de perda",
-      sublabel: "estimada",
-      color: "text-yellow-400",
-      bg: "bg-yellow-500/10 border-yellow-500/30",
-    },
-    {
-      icon: AlertTriangle,
-      value: 128000,
-      prefix: "R$ ",
-      formatAsCurrency: true,
-      label: "Perda mensal",
-      sublabel: "estimada",
-      color: "text-red-500",
-      bg: "bg-red-500/15 border-red-500/40",
-    },
-  ];
+    if (isActive) {
+      const t = setTimeout(() => setShow(true), 100);
+      return () => clearTimeout(t);
+    }
+    setShow(false);
+  }, [isActive]);
 
   return (
-    <div ref={containerRef} className="flex flex-col items-center justify-center gap-6 h-full relative">
-      {/* Animated grid background */}
-      <div className="absolute inset-0 opacity-5">
+    <div className="relative w-full h-full flex items-center justify-center px-6 md:px-16 lg:px-24 overflow-hidden">
+      {/* Floating particles */}
+      {particles.map((p) => (
+        <Particle key={p.id} {...p} />
+      ))}
+
+      {/* Gradient orbs */}
+      <div className="absolute top-20 right-20 w-[400px] h-[400px] rounded-full bg-[#00D4AA]/5 blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-20 left-20 w-[300px] h-[300px] rounded-full bg-[#3B82F6]/5 blur-[100px] pointer-events-none" />
+
+      <div className="relative z-10 max-w-5xl mx-auto text-center">
+        {/* Badge */}
         <div
-          className="w-full h-full"
-          style={{
-            backgroundImage:
-              "linear-gradient(hsl(var(--danger) / 0.3) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--danger) / 0.3) 1px, transparent 1px)",
-            backgroundSize: "40px 40px",
-          }}
-        />
-      </div>
+          className={`inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card mb-8 transition-all duration-700 ${
+            show ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+          }`}
+        >
+          <span className="text-sm">🩺</span>
+          <span className="text-sm text-[#94A3B8]">Proposta Exclusiva — Doctor's First</span>
+        </div>
 
-      {/* Badge */}
-      <div className="hero-badge opacity-0 inline-flex items-center px-6 py-2 rounded-full bg-red-500/20 border border-red-500/40 shadow-lg">
-        <AlertTriangle className="w-4 h-4 mr-2 text-red-400" />
-        <span className="text-sm font-semibold text-red-300">
-          ANALISE CRITICA - ALMIG EPIs
-        </span>
-      </div>
+        {/* Title */}
+        <h1
+          className={`font-display text-4xl md:text-5xl lg:text-[4.5rem] leading-[1.1] mb-6 transition-all duration-700 ${
+            show ? "opacity-100 translate-y-0 delay-200" : "opacity-0 translate-y-6"
+          }`}
+        >
+          <span className="text-gradient-primary">Sua operação de atendimento</span>
+          <br />
+          <span className="text-[#F1F5F9]">pode estar custando clientes</span>
+          <br />
+          <span className="text-[#F1F5F9]">e receita todos os dias</span>
+        </h1>
 
-      {/* Title */}
-      <h1 className="hero-title opacity-0 text-4xl md:text-6xl lg:text-7xl font-bold text-center tracking-tight">
-        <span className="bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
-          Sua empresa pode estar
-        </span>
-        <br />
-        <span className="bg-gradient-to-r from-red-400 to-red-600 bg-clip-text text-transparent">
-          perdendo R$ 128.000/mes
-        </span>
-      </h1>
+        {/* Subtitle */}
+        <p
+          className={`text-lg md:text-xl text-[#94A3B8] max-w-2xl mx-auto mb-12 transition-all duration-700 ${
+            show ? "opacity-100 translate-y-0 delay-300" : "opacity-0 translate-y-4"
+          }`}
+        >
+          Identificamos 3 gargalos críticos na operação digital da Doctor's First que estão travando o crescimento
+        </p>
 
-      {/* Subtitle */}
-      <p className="hero-subtitle opacity-0 text-lg md:text-xl text-muted-foreground text-center max-w-3xl">
-        Identificamos 4 falhas criticas na operacao comercial da ALMIG EPIs que
-        estao drenando receita todos os dias
-      </p>
-
-      {/* Stat Cards */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 w-full max-w-4xl mt-4">
-        {stats.map((stat, index) => {
-          const Icon = stat.icon;
-          return (
-            <div
-              key={index}
-              className={`stat-card opacity-0 ${stat.bg} border rounded-xl p-4 text-center flex flex-col items-center gap-2`}
-            >
-              <Icon className={`w-6 h-6 ${stat.color}`} />
-              <div className={`text-2xl md:text-3xl font-bold ${stat.color}`}>
-                <CounterAnimation
-                  end={stat.value}
-                  prefix={stat.prefix || ""}
-                  suffix={stat.suffix || ""}
-                  formatAsCurrency={stat.formatAsCurrency || false}
-                  duration={2500}
-                />
-              </div>
-              <div>
-                <p className="text-sm font-medium text-foreground">{stat.label}</p>
-                <p className="text-xs text-muted-foreground">{stat.sublabel}</p>
+        {/* Stats pills */}
+        <div
+          className={`flex flex-col md:flex-row items-center justify-center gap-4 mb-12 transition-all duration-700 ${
+            show ? "opacity-100 translate-y-0 delay-500" : "opacity-0 translate-y-4"
+          }`}
+        >
+          {[
+            { color: "#EF4444", label: "Leads sem resposta rápida", desc: "Perda de conversão estimada" },
+            { color: "#F59E0B", label: "Disparos manuais e sem segmentação", desc: "Audiência desperdiçada" },
+            { color: "#F97316", label: "Funil invisível no Edrone", desc: "Decisões no escuro" },
+          ].map((item, i) => (
+            <div key={i} className="glass-card px-5 py-4 flex items-center gap-3 min-w-[260px]">
+              <div className="w-3 h-3 rounded-full animate-pulse shrink-0" style={{ backgroundColor: item.color }} />
+              <div className="text-left">
+                <div className="text-xs text-[#94A3B8] uppercase tracking-wider mb-1">{item.label}</div>
+                <div className="text-sm font-medium" style={{ color: item.color }}>{item.desc}</div>
               </div>
             </div>
-          );
-        })}
-      </div>
+          ))}
+        </div>
 
-      {/* Navigation hint */}
-      <div className="flex items-center gap-2 text-sm text-muted-foreground mt-4 animate-pulse">
-        <span>Navegue com as setas para ver a analise completa</span>
-        <ArrowRight className="w-4 h-4" />
       </div>
     </div>
   );
-};
+}
